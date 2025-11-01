@@ -59,10 +59,34 @@ Cras nisi metus, rutrum et est id, pellentesque pellentesque massa. Cras nec lao
 
 Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultricies magna, vitae placerat lorem commodo ut. Suspendisse ut elementum nibh, eu sagittis nisi. Sed molestie elit felis, nec tempus diam cursus et. Donec a pellentesque tellus, vitae consectetur urna. Mauris erat arcu, blandit non sapien sit amet, tincidunt euismod ipsum. Sed tincidunt porttitor nulla ut sagittis. Sed posuere porta commodo. Mauris convallis aliquam nisl auctor varius. Sed at lorem neque. Fusce convallis tellus arcu, vel pulvinar magna euismod imperdiet.`,
     },
+    // {
+    //     recipeName: "Cool recipe V3",
+    //     author: "Bob Smith V3",
+    //     recipeDesc: "dolor sit amet V2",
+    //     coverImg: "test/test.jpeg",
+    //     imgs: {},
+    //     recipe: ``
+    // },
+    // {
+    //     recipeName: "Cool recipe V4",
+    //     author: "Bob Smith V4",
+    //     recipeDesc: "dolor sit amet V2",
+    //     coverImg: "test/test.jpeg",
+    //     imgs: {},
+    //     recipe: ``
+    // },
+    // {
+    //     recipeName: "Cool recipe V5",
+    //     author: "Bob Smith V5",
+    //     recipeDesc: "dolor sit amet V2",
+    //     coverImg: "test/test.jpeg",
+    //     imgs: {},
+    //     recipe: ``
+    // },
 ];
 
 let whitelist = [];
-const numRecipesPerRow = 3;
+const numRecipesPerRow = 4;
 
 // What to run right after the site loads
 function firstLoad() {
@@ -123,7 +147,7 @@ function renderRecipeButtons(whitelist = []) {
 function addRecipeButton(recipe, rowNum) {
     // Get the parent div and shuffle button
     const recipeDiv = document.getElementById("recipeSelection");
-    const shuffleButton = document.getElementById("shuffleButton");
+    // const shuffleButton = document.getElementById("shuffleButton");
     let parentDiv = document.getElementById("row"+rowNum.toString());
 
     // Create the div to hold the button
@@ -137,7 +161,8 @@ function addRecipeButton(recipe, rowNum) {
         parentDiv.setAttribute("id", "row"+rowNum.toString());
         parentDiv.setAttribute("class", "recipeRow");
 
-        recipeDiv.insertBefore(parentDiv, shuffleButton);
+        // recipeDiv.insertBefore(parentDiv, shuffleButton);
+        recipeDiv.appendChild(parentDiv);
     }
     parentDiv.appendChild(childDiv);
 
@@ -209,23 +234,29 @@ function selectRecipe(event) {
     const author = recipeButton.id;
     const recipe = getRecipeWithAuthor(author.slice(0, author.length - 6));
 
-    renderRecipe(recipe)
+    renderRecipe(recipe);
 
     const recipeSelection = document.getElementById("recipeSelection");
     const recipeShowing = document.getElementById("recipeShowing");
+    const shuffle = document.getElementById("shuffleButton");
+    const goBack = document.getElementById("backButton");
 
     recipeSelection.classList.add("hidden");
+    shuffle.classList.add("hidden");
     recipeShowing.classList.remove("hidden");
-
-    // Add the other stuff
+    goBack.classList.remove("hidden");
 }
 
 function goBack() {
     const recipeSelection = document.getElementById("recipeSelection");
     const recipeShowing = document.getElementById("recipeShowing");
+    const shuffle = document.getElementById("shuffleButton");
+    const goBack = document.getElementById("backButton");
 
     recipeSelection.classList.remove("hidden");
+    shuffle.classList.remove("hidden");
     recipeShowing.classList.add("hidden");
+    goBack.classList.add("hidden");
 }
 
 // Search text input handling

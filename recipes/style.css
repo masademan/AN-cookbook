@@ -1,3 +1,20 @@
 .hidden {
     display: none !important;
 }
+
+.recipeRow {
+    display: flex;
+    justify-content: center; /* centers the recipes */
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.staysTop {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: sticky;
+    top: 0; /* The element will stick when its top edge reaches the viewport's top edge */
+    background-color: #eee; /* Example background */
+    padding: 1rem; /* Example padding */
+}
