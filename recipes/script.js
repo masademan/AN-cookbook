@@ -59,30 +59,190 @@ Cras nisi metus, rutrum et est id, pellentesque pellentesque massa. Cras nec lao
 
 Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultricies magna, vitae placerat lorem commodo ut. Suspendisse ut elementum nibh, eu sagittis nisi. Sed molestie elit felis, nec tempus diam cursus et. Donec a pellentesque tellus, vitae consectetur urna. Mauris erat arcu, blandit non sapien sit amet, tincidunt euismod ipsum. Sed tincidunt porttitor nulla ut sagittis. Sed posuere porta commodo. Mauris convallis aliquam nisl auctor varius. Sed at lorem neque. Fusce convallis tellus arcu, vel pulvinar magna euismod imperdiet.`,
     },
-    // {
-    //     recipeName: "Cool recipe V3",
-    //     author: "Bob Smith V3",
-    //     recipeDesc: "dolor sit amet V2",
-    //     coverImg: "test/test.jpeg",
-    //     imgs: {},
-    //     recipe: ``
-    // },
-    // {
-    //     recipeName: "Cool recipe V4",
-    //     author: "Bob Smith V4",
-    //     recipeDesc: "dolor sit amet V2",
-    //     coverImg: "test/test.jpeg",
-    //     imgs: {},
-    //     recipe: ``
-    // },
-    // {
-    //     recipeName: "Cool recipe V5",
-    //     author: "Bob Smith V5",
-    //     recipeDesc: "dolor sit amet V2",
-    //     coverImg: "test/test.jpeg",
-    //     imgs: {},
-    //     recipe: ``
-    // },
+    {
+        recipeName: "Cool recipe V3",
+        author: "Bob Smith V3",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V4",
+        author: "Bob Smith V4",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V5",
+        author: "Bob Smith V5",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V35",
+        author: "Bob Smith V35",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V45",
+        author: "Bob Smith V45",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V55",
+        author: "Bob Smith V55",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V36",
+        author: "Bob Smith V36",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V46",
+        author: "Bob Smith V46",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V56",
+        author: "Bob Smith V56",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V365",
+        author: "Bob Smith V365",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V465",
+        author: "Bob Smith V465",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V655",
+        author: "Bob Smith V655",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V585",
+        author: "Bob Smith V855",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing 2",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V6855",
+        author: "Bob Smith V655",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V5885",
+        author: "Bob Smith V855",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing 5",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing 25",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe 676767",
+        author: "Bob Smith V655",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool recipe V58895",
+        author: "Bob Smith V855",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing 59",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
+    {
+        recipeName: "Cool thing 295",
+        author: "Boe Jiden",
+        recipeDesc: "dolor sit amet V2",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: ``
+    },
 ];
 
 let whitelist = [];
@@ -122,6 +282,8 @@ function randInt(min, max) {
 
 // Rendering the recipe data
 function renderRecipe(recipe) {
+    const title = document.getElementById("recipeTitle");
+    title.textContent = recipe.recipeName;
 }
 
 function renderRecipeImages(recipe, imgSrc) {
@@ -134,12 +296,20 @@ function renderRecipeButtons(whitelist = []) {
         renderList = recipes;
     }
 
+    const seen = [];
     let rowNum = 0;
+    let recipeCount = 0;
     for (let recipe of recipes) {
-        removeElementByID(recipe.author+"Div");
+        removeElementByID(recipe.author + recipe.recipeName + "Div");
         if (contains(renderList, recipe)) {
-            addRecipeButton(recipe, Math.trunc(rowNum/numRecipesPerRow));
-            rowNum++;
+            if (!contains(seen, recipe)) {
+                addRecipeButton(recipe, rowNum);
+                recipeCount++;
+                if (recipeCount % numRecipesPerRow == 0) {
+                    rowNum++;
+                }
+                seen.push(recipe);
+            }
         }
     }
 }
@@ -152,7 +322,7 @@ function addRecipeButton(recipe, rowNum) {
 
     // Create the div to hold the button
     const childDiv = document.createElement("div");
-    childDiv.setAttribute("id", recipe.author+"Div");
+    childDiv.setAttribute("id", recipe.author + recipe.recipeName + "Div");
     childDiv.setAttribute("class", "recipeButtonDiv");
 
     // Add the recipe div to the document
@@ -168,9 +338,9 @@ function addRecipeButton(recipe, rowNum) {
 
     // Create the button
     const childButton = document.createElement("button");
-    childButton.setAttribute("id", recipe.author+"Button");
+    childButton.setAttribute("id", recipe.author + recipe.recipeName + "Button");
     childButton.setAttribute("class", "recipeButton");
-    childButton.setAttribute("onclick", "selectRecipe(event)");
+    childButton.setAttribute("onclick", "selectRecipe(this)");
 
     // Add the recipe button to the div
     childDiv.appendChild(childButton);
@@ -208,14 +378,21 @@ function removeElementByID(id) {
     elementToRemove.remove();
 }
 
-function getRecipeWithAuthor(authorName) {
+function getRecipeWithAuthorAndRecipe(recipeInfo) {
     for (let recipe of recipes) {
-        if (recipe.author == authorName) {
+        if (recipe.author + recipe.recipeName == recipeInfo) {
             return recipe;
         }
     }
 
-    return null;
+    return {
+        recipeName: "None",
+        author: "None",
+        recipeDesc: "None",
+        coverImg: "test/test.jpeg",
+        imgs: {},
+        recipe: `None`
+    };
 }
 
 function contains(arrayOfObjects, object) {
@@ -229,10 +406,9 @@ function contains(arrayOfObjects, object) {
 }
 
 // To and from recipe selection
-function selectRecipe(event) {
-    const recipeButton = event.target;
-    const author = recipeButton.id;
-    const recipe = getRecipeWithAuthor(author.slice(0, author.length - 6));
+function selectRecipe(buttonElement) {
+    const recipeInfo = buttonElement.id;
+    const recipe = getRecipeWithAuthorAndRecipe(recipeInfo.slice(0, recipeInfo.length - 6));
 
     renderRecipe(recipe);
 
@@ -382,8 +558,8 @@ function compareValues(a, b) {
 
 
 // Recipe button organization:
-// recipe divs: id="{authorName}Div", class="recipeButtonDiv"
-// button types: id="{authorName}Button", class="recipeButton"
+// recipe divs: id="{authorName}{recipeName}Div", class="recipeButtonDiv"
+// button types: id="{authorName}{recipeName}Button", class="recipeButton"
 
 // Recipe listing organization:
 //
