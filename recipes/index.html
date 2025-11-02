@@ -17,8 +17,10 @@
             <input type="text" id="searchRecipe" name="recipeToSearch" placeholder="What are you searching?">
         </form> -->
         <input type="text" id="searchRecipe" name="recipeToSearch" placeholder="What are you searching?">
+
         <button id="shuffleButton" onclick="shuffleRecipeButton()">Shuffle</button>
         <button id="backButton" onclick="goBack()" class="hidden">Back to recipes</button>
+        <button id="darkModeToggle" onclick="toggleDarkMode()">Dark Mode</button>
     </div>
 
      <div id="recipeSelection">
@@ -26,25 +28,31 @@
 
      <div id="recipeShowing" class="hidden">
         <div id="mainRecipeInfo">
-            <h1 id="recipeTitle"></h1>
-            <p id="recipeAuthor"></p>
-            <img id="recipeCoverImg">
+            <div id="titleAndAuthor">
+                <h1 id="recipeTitle"></h1>
+                <p id="recipeAuthor"></p>
+            </div>
+            <div id="coverImg">
+                <img id="recipeCoverImg">
+            </div>
         </div>
 
         <div id="extraInfo">
             <p id="recipeDesc"></p>
         </div>
 
-        <div id="materials">
-            <p id="materialList"></p>
-        </div>
+        <div id="mainRecipeBody">
+            <div id="materials">
+                <p id="materialList"></p>
+            </div>
 
-        <div id="ingredients">
-            <p id="ingredientList"></p>
-        </div>
+            <div id="ingredients">
+                <p id="ingredientList"></p>
+            </div>
 
-        <div id="recipe">
-            <p id="recipeInstructions"></p>
+            <div id="recipe">
+                <p id="recipeInstructions"></p>
+            </div>
         </div>
      </div>
 

@@ -246,6 +246,7 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
 ];
 
 let whitelist = [];
+let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const numRecipesPerRow = 4;
 
 // What to run right after the site loads
@@ -257,6 +258,11 @@ function firstLoad() {
     searchTextBox.addEventListener("input", function(event) {
         handleSubmit(event);
     });
+
+    // See if darkMode is true
+    if (darkMode) {
+        addDarkMode();
+    }
 }
 
 // Shuffling the recipes
@@ -441,8 +447,16 @@ function handleSubmit(event) {
 
     const searchQuery = document.getElementById("searchRecipe").value;
 
-    whitelist = search(searchQuery);
-    renderRecipeButtons(whitelist);
+    if (searchQuery == "EASTER EGG: BOE JIDEN!!") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET BOE JIDEN JUMPSCARED!!");
+    } else if (searchQuery == "EASTER EGG: KIRBY THE GOOBER!!") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET KIRBY THE GOOBER JUMPSCARED!!");
+    } else {
+        whitelist = search(searchQuery);
+        renderRecipeButtons(whitelist);
+    }
 }
 
 // Searching recipes (One of two search algorithms can be selected)
@@ -528,33 +542,47 @@ function isSubset(a, b) {
 
 function compareObjects(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
+}
 
-    // if (!compareKeys(a, b)) {
-    //     return false;
+// Dark mode toggle
+function toggleDarkMode() {
+    darkMode = !darkMode;
+
+    if (darkMode) {
+        addDarkMode();
+    } else {
+        removeDarkMode();
+    }
+}
+
+function removeDarkMode() {
+    const darkModeButton = document.getElementById("darkModeToggle");
+    const bodyElement = document.body;
+    // const allElements = document.body.querySelectorAll("*");
+
+    darkModeButton.textContent = "Dark Mode";
+    bodyElement.classList.remove("darkMode");
+    // for (const element of allElements) {
+    //     element.classList.remove("darkMode");
     // }
+}
 
-    // if (!compareValues(a, b)) {
-    //     return false;
+function addDarkMode() {
+    const darkModeButton = document.getElementById("darkModeToggle");
+    const bodyElement = document.body;
+    // const allElements = document.body.querySelectorAll("*");
+
+    darkModeButton.textContent = "Light Mode";
+    bodyElement.classList.add("darkMode");
+    // for (const element of allElements) {
+    //     element.classList.add("darkMode");
     // }
-
-    // return true;
 }
 
-function compareKeys(a, b) {
-  var aKeys = Object.keys(a).sort();
-  var bKeys = Object.keys(b).sort();
-  return JSON.stringify(aKeys) === JSON.stringify(bKeys);
-}
+// Easter egg stuff
+function boeJidenJumpscare() {}
 
-function compareValues(a, b) {
-    Object.keys(a).forEach(key => {
-        if (a[key] !== b[key]) {
-            return false;
-        }
-    });
-
-    return true;
-}
+function kirbyJumpscare() {}
 
 
 // Recipe button organization:

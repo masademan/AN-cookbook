@@ -1,3 +1,19 @@
+:root {
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --sticky-background: #ebebeb;
+  --button-background: #e5e5e5;
+  --border-color: #cacaca;
+}
+
+.darkMode {
+  --background-color: #1a1a1a;
+  --text-color: #f0f0f0;
+  --sticky-background: #222222;
+  --button-background: #202020;
+  --border-color: #545454;
+}
+
 .hidden {
     display: none !important;
 }
@@ -15,6 +31,23 @@
     gap: 20px;
     position: sticky;
     top: 0; /* The element will stick when its top edge reaches the viewport's top edge */
-    background-color: #eee; /* Example background */
+    background-color: var(--sticky-background); /* Example background */
     padding: 1rem; /* Example padding */
+}
+
+input[type="text"] {
+    background-color: var(--button-background);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+button {
+    background-color: var(--button-background);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
