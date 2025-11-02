@@ -247,7 +247,7 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
 
 let whitelist = [];
 let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const numRecipesPerRow = 4;
+let numRecipesPerRow = 4;
 
 // What to run right after the site loads
 function firstLoad() {
@@ -263,6 +263,10 @@ function firstLoad() {
     if (darkMode) {
         addDarkMode();
     }
+
+    window.addEventListener('resize', () => {
+        renderRecipeButtons(whitelist);
+    });
 }
 
 // Shuffling the recipes
@@ -305,11 +309,23 @@ function renderRecipeButtons(whitelist = []) {
     const seen = [];
     let rowNum = 0;
     let recipeCount = 0;
+    let imgWidth = getImgWidth(4);
+    if (imgWidth < 50) {
+        numRecipesPerRow = 1;
+    } else if (imgWidth < 100) {
+        numRecipesPerRow = 2;
+    } else if (imgWidth < 200) {
+        numRecipesPerRow = 3;
+    } else {
+        numRecipesPerRow = 4;
+    }
+    imgWidth = getImgWidth(numRecipesPerRow);
+
     for (let recipe of recipes) {
         removeElementByID(recipe.author + recipe.recipeName + "Div");
         if (contains(renderList, recipe)) {
             if (!contains(seen, recipe)) {
-                addRecipeButton(recipe, rowNum);
+                addRecipeButton(recipe, rowNum, imgWidth);
                 recipeCount++;
                 if (recipeCount % numRecipesPerRow == 0) {
                     rowNum++;
@@ -320,7 +336,12 @@ function renderRecipeButtons(whitelist = []) {
     }
 }
 
-function addRecipeButton(recipe, rowNum) {
+function getImgWidth(numPerRow) {
+    const viewportWidth = window.innerWidth;
+    return Math.min(348, Math.trunc((viewportWidth - (numPerRow + 1) * 20)/numPerRow - 12));
+}
+
+function addRecipeButton(recipe, rowNum, imgWidth) {
     // Get the parent div and shuffle button
     const recipeDiv = document.getElementById("recipeSelection");
     // const shuffleButton = document.getElementById("shuffleButton");
@@ -358,7 +379,8 @@ function addRecipeButton(recipe, rowNum) {
         imgPath = "assets/" + imgPath;
     }
     recipeImg.setAttribute("src", imgPath);
-    recipeImg.setAttribute("alt", "Recipe cover image");
+    recipeImg.setAttribute("alt", recipe.recipeName + " cover image");
+    recipeImg.setAttribute("width", imgWidth);
 
     const recipeName = document.createElement("p");
     recipeName.setAttribute("class", "recipeName");
@@ -558,25 +580,17 @@ function toggleDarkMode() {
 function removeDarkMode() {
     const darkModeButton = document.getElementById("darkModeToggle");
     const bodyElement = document.body;
-    // const allElements = document.body.querySelectorAll("*");
 
     darkModeButton.textContent = "Dark Mode";
     bodyElement.classList.remove("darkMode");
-    // for (const element of allElements) {
-    //     element.classList.remove("darkMode");
-    // }
 }
 
 function addDarkMode() {
     const darkModeButton = document.getElementById("darkModeToggle");
     const bodyElement = document.body;
-    // const allElements = document.body.querySelectorAll("*");
 
     darkModeButton.textContent = "Light Mode";
     bodyElement.classList.add("darkMode");
-    // for (const element of allElements) {
-    //     element.classList.add("darkMode");
-    // }
 }
 
 // Easter egg stuff
