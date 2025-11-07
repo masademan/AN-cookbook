@@ -248,9 +248,10 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
 let whitelist = [];
 let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let numRecipesPerRow = 4;
+const secsToJumpscare = 2;
 
 // What to run right after the site loads
-function firstLoad() {
+function BOOT() {
     renderRecipeButtons(whitelist);
 
     // If the <form> tag is commented, use this
@@ -309,18 +310,7 @@ function renderRecipeButtons(whitelist = []) {
     const seen = [];
     let rowNum = 0;
     let recipeCount = 0;
-    let imgWidth = getImgWidth(4);
-    if (imgWidth < 50) {
-        numRecipesPerRow = 1;
-    } else if (imgWidth < 100) {
-        numRecipesPerRow = 2;
-    } else if (imgWidth < 200) {
-        numRecipesPerRow = 3;
-    } else {
-        numRecipesPerRow = 4;
-    }
-    imgWidth = getImgWidth(numRecipesPerRow);
-
+    const imgWidth = getFinalImgWidth();
     for (let recipe of recipes) {
         removeElementByID(recipe.author + recipe.recipeName + "Div");
         if (contains(renderList, recipe)) {
@@ -334,6 +324,20 @@ function renderRecipeButtons(whitelist = []) {
             }
         }
     }
+}
+
+function getFinalImgWidth() {
+    let imgWidth = getImgWidth(4);
+    if (imgWidth < 50) {
+        numRecipesPerRow = 1;
+    } else if (imgWidth < 100) {
+        numRecipesPerRow = 2;
+    } else if (imgWidth < 200) {
+        numRecipesPerRow = 3;
+    } else {
+        numRecipesPerRow = 4;
+    }
+    return getImgWidth(numRecipesPerRow);
 }
 
 function getImgWidth(numPerRow) {
@@ -469,12 +473,22 @@ function handleSubmit(event) {
 
     const searchQuery = document.getElementById("searchRecipe").value;
 
-    if (searchQuery == "EASTER EGG: BOE JIDEN!!") {
+    if (searchQuery == "BOE JIDEN") {
         document.getElementById("searchRecipe").value = "";
         console.log("GET BOE JIDEN JUMPSCARED!!");
-    } else if (searchQuery == "EASTER EGG: KIRBY THE GOOBER!!") {
+        boeJidenJumpscare();
+    } else if (searchQuery == "KIRBY") {
         document.getElementById("searchRecipe").value = "";
         console.log("GET KIRBY THE GOOBER JUMPSCARED!!");
+        kirbyJumpscare();
+    } else if (searchQuery == "ROZIZZLE THE RIZZLER") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET ROZY JUMPSCARED!!");
+        rozyJumpscare();
+    } else if (searchQuery == "BAYAK") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET BAYAK JUMPSCARED!!");
+        bayakJumpscare();
     } else {
         whitelist = search(searchQuery);
         renderRecipeButtons(whitelist);
@@ -594,9 +608,40 @@ function addDarkMode() {
 }
 
 // Easter egg stuff
-function boeJidenJumpscare() {}
+function hideJumpscares(imgID, textID){
+    document.getElementById("getJumpscared").classList.add("hidden");
+    document.getElementById(imgID).classList.add("hidden");
+    document.getElementById(textID).classList.add("hidden");
+}
 
-function kirbyJumpscare() {}
+function showJumpscares(imgID, textID){
+    document.getElementById("getJumpscared").classList.remove("hidden");
+    document.getElementById(imgID).classList.remove("hidden");
+    document.getElementById(textID).classList.remove("hidden");
+}
+
+function jumpscareLogic(imgID, textID, time = 2) {
+    showJumpscares(imgID, textID);
+    setTimeout(function() {
+        hideJumpscares(imgID, textID);
+    }, 1000*time);
+}
+
+function boeJidenJumpscare() {
+    jumpscareLogic("BOE-JIDEN", "jumpscareIdBoeJiden", secsToJumpscare);
+}
+
+function kirbyJumpscare() {
+    jumpscareLogic("KIRBY", "jumpscareIdKirby", secsToJumpscare);
+}
+
+function bayakJumpscare() {
+    jumpscareLogic("BAYAK", "jumpscareIdBayak", secsToJumpscare);
+}
+
+function rozyJumpscare() {
+    jumpscareLogic("ROZY", "jumpscareIdRozy", secsToJumpscare);
+}
 
 
 // Recipe button organization:

@@ -35,6 +35,43 @@
     padding: 1rem; /* Example padding */
 }
 
+.overlay {
+  display: flex;
+  position: fixed; /* Sit on top of the page content */
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  pointer-events: visible;
+}
+
+#jumpscareText {
+  position: absolute;
+  top: 85%;
+  transform: translateY(-50%);
+  font-size: 40px;
+}
+
+#BOE-JIDEN {
+  position: absolute;
+  width: 100%;
+}
+
+#KIRBY {
+  position: absolute;
+  width: 90%;
+}
+
+#ROZY {
+  position: absolute;
+  width: 70%;
+}
+
+#BAYAK {
+  position: absolute;
+  width: 80%;
+}
+
 input[type="text"] {
     background-color: var(--button-background);
     color: var(--text-color);

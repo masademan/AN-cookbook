@@ -8,9 +8,7 @@
     <link rel="icon" type="image/jpeg" href="assets/favicons/AN logo monochrome.jpg">
     <!-- <link rel="icon" type="image/jpeg" href="assets/favicons/AN logo color.jpeg"> -->
 </head>
-<body onload="firstLoad()">
-    <!-- <pre id="test"></pre> -->
-
+<body onload="BOOT()">
     <div id="topBar" class="staysTop">
         <h1>Welcome to the AN cookbook!</h1>
         <!-- <form id="searchForm" onsubmit="handleSubmit(event)">
@@ -21,6 +19,19 @@
         <button id="shuffleButton" onclick="shuffleRecipeButton()">Shuffle</button>
         <button id="backButton" onclick="goBack()" class="hidden">Back to recipes</button>
         <button id="darkModeToggle" onclick="toggleDarkMode()">Dark Mode</button>
+    </div>
+
+    <div id="getJumpscared" class="overlay hidden">
+        <img id="BOE-JIDEN" src="assets/not jumpscares/boe-jiden.png" class="hidden">
+        <img id="KIRBY" src="assets/not jumpscares/kirby.jpg" class="hidden">
+        <img id="ROZY" src="assets/not jumpscares/rozy.png" class="hidden">
+        <img id="BAYAK" src="assets/not jumpscares/bayak.png" class="hidden">
+        <div id="jumpscareText">
+            <h1 id="jumpscareIdBoeJiden" class="hidden">BOE JIDEN</h1>
+            <h1 id="jumpscareIdKirby" class="hidden">KIRBY</h1>
+            <h1 id="jumpscareIdRozy" class="hidden">ROZIZZLE THE RIZZLER</h1>
+            <h1 id="jumpscareIdBayak" class="hidden">BAYAK</h1>
+        </div>
     </div>
 
      <div id="recipeSelection">
