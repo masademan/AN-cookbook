@@ -49,7 +49,7 @@
   position: absolute;
   top: 85%;
   transform: translateY(-50%);
-  font-size: 40px;
+  font-size: 2vw;
 }
 
 #BOE-JIDEN {
@@ -76,6 +76,12 @@
   position: absolute;
   width: 75%;
   transform: translateY(-15%) translateX(5%);
+}
+
+#DANIEL {
+  position: absolute;
+  width: 65%;
+  transform: translateY(-10%);
 }
 
 input[type="text"] {

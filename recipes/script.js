@@ -489,10 +489,14 @@ function handleSubmit(event) {
         document.getElementById("searchRecipe").value = "";
         console.log("GET BAYAK JUMPSCARED!!");
         bayakJumpscare();
-    } else if (searchQuery == "JENSON") {
+    } else if (searchQuery == "JC JENSON") {
         document.getElementById("searchRecipe").value = "";
         console.log("GET JENSON TICKLE JUMPSCARED!!");
         jensonJumpscare();
+    } else if (searchQuery == "FREAK BOB") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET THE UNC JUMPSCARE!!");
+        danielJumpscare();
     } else {
         whitelist = search(searchQuery);
         renderRecipeButtons(whitelist);
@@ -649,6 +653,10 @@ function rozyJumpscare() {
 
 function jensonJumpscare() {
     jumpscareLogic("JENSON", "jumpscareIdJenson", secsToJumpscare);
+}
+
+function danielJumpscare() {
+    jumpscareLogic("DANIEL", "jumpscareIdDaniel", secsToJumpscare);
 }
 
 
