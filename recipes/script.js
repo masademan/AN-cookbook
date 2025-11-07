@@ -522,6 +522,8 @@ function search(query) {
     //     }
     // }
 
+    // if (whitelist.length == 0 && query.length > 0) { whitelist.push(null); }
+
     // return whitelist;
 
     // Search using letter ordering
@@ -558,6 +560,8 @@ function search(query) {
             whitelist.push(recipe);
         }
     }
+
+    if (whitelist.length == 0 && query.length > 0) { whitelist.push(null); }
 
     return whitelist;
 }
@@ -618,6 +622,15 @@ function addDarkMode() {
 
     darkModeButton.textContent = "Light Mode";
     bodyElement.classList.add("darkMode");
+}
+
+// Temperature unit conversion
+function cToF(celsius=0) {
+    return Math.round((celsius * 9 / 5 + 32)*10)/10;
+}
+
+function fToC(fahrenheit=0) {
+    return Math.round((fahrenheit - 32) * 50 / 9)/10;
 }
 
 // Easter egg stuff
