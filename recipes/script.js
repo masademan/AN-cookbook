@@ -249,6 +249,7 @@ let whitelist = [];
 let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let numRecipesPerRow = 4;
 const secsToJumpscare = 2;
+const jumpscaresDone = [];
 
 // What to run right after the site loads
 function BOOT() {
@@ -474,33 +475,33 @@ function handleSubmit(event) {
     const searchQuery = document.getElementById("searchRecipe").value;
 
     if (searchQuery == "BOE JIDEN") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET BOE JIDEN JUMPSCARED!!");
-        boeJidenJumpscare();
+        if (boeJidenJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "KIRBY") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET KIRBY THE GOOBER JUMPSCARED!!");
-        kirbyJumpscare();
+        if (kirbyJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "ROZIZZLE THE RIZZLER") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET ROZY JUMPSCARED!!");
-        rozyJumpscare();
+        if (rozyJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "BAYAK") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET BAYAK JUMPSCARED!!");
-        bayakJumpscare();
+        if (bayakJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "JC JENSON") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET JENSON TICKLE JUMPSCARED!!");
-        jensonJumpscare();
+        if (jensonJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "FREAK BOB") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET THE UNC JUMPSCARE!!");
-        danielJumpscare();
+        if (danielJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else if (searchQuery == "DUOLINGO?!") {
-        document.getElementById("searchRecipe").value = "";
-        console.log("GET DUO JUMPSCARED!!");
-        duoJumpscare();
+        if (duoJumpscare(searchQuery)) {
+            document.getElementById("searchRecipe").value = "";
+        }
     } else {
         whitelist = search(searchQuery);
         renderRecipeButtons(whitelist);
@@ -639,32 +640,53 @@ function jumpscareLogic(imgID, textID, time = 2) {
     }, 1000*time);
 }
 
-function boeJidenJumpscare() {
+function boeJidenJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("BOE-JIDEN", "jumpscareIdBoeJiden", secsToJumpscare);
+    return true;
 }
 
-function kirbyJumpscare() {
+function kirbyJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("KIRBY", "jumpscareIdKirby", secsToJumpscare);
+    return true;
 }
 
-function bayakJumpscare() {
+function bayakJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("BAYAK", "jumpscareIdBayak", secsToJumpscare);
+    return true;
 }
 
-function rozyJumpscare() {
+function rozyJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("ROZY", "jumpscareIdRozy", secsToJumpscare);
+    return true;
 }
 
-function jensonJumpscare() {
+function jensonJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("JENSON", "jumpscareIdJenson", secsToJumpscare);
+    return true;
 }
 
-function danielJumpscare() {
+function danielJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("DANIEL", "jumpscareIdDaniel", secsToJumpscare);
+    return true;
 }
 
-function duoJumpscare() {
+function duoJumpscare(searchQuery="") {
+    if (jumpscaresDone.includes(searchQuery)) { return false; }
+    jumpscaresDone.push(searchQuery);
     jumpscareLogic("DUO", "jumpscareIdDuo", secsToJumpscare);
+    return true;
 }
 
 
