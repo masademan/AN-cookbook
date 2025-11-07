@@ -45,6 +45,10 @@
   pointer-events: visible;
 }
 
+#titleBar {
+  font-size: 2vw;
+}
+
 #jumpscareText {
   position: absolute;
   top: 85%;
@@ -76,6 +80,16 @@
   position: absolute;
   width: 75%;
   transform: translateY(-15%) translateX(5%);
+}
+
+#DUO {
+  position: absolute;
+  width: 65%;
+  transform: translateY(-15%);
+}
+
+#jumpscareIdDuo {
+  color: #000;
 }
 
 #DANIEL {

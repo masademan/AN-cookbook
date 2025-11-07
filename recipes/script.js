@@ -497,6 +497,10 @@ function handleSubmit(event) {
         document.getElementById("searchRecipe").value = "";
         console.log("GET THE UNC JUMPSCARE!!");
         danielJumpscare();
+    } else if (searchQuery == "DUOLINGO?!") {
+        document.getElementById("searchRecipe").value = "";
+        console.log("GET DUO JUMPSCARED!!");
+        duoJumpscare();
     } else {
         whitelist = search(searchQuery);
         renderRecipeButtons(whitelist);
@@ -657,6 +661,10 @@ function jensonJumpscare() {
 
 function danielJumpscare() {
     jumpscareLogic("DANIEL", "jumpscareIdDaniel", secsToJumpscare);
+}
+
+function duoJumpscare() {
+    jumpscareLogic("DUO", "jumpscareIdDuo", secsToJumpscare);
 }
 
 
