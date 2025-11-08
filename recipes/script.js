@@ -244,12 +244,51 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
         recipe: ``
     },
 ];
+    // { // Recipe template
+    //     recipeName: "",      // Recipe name
+    //     author: "",          // Author's name
+    //     origin: "",          // Where the author is from
+    //     recipeDesc: "",      // Short description of the recipe
+    //     coverImg: "",        // The cover image of the recipe
+    //     recipe: ``,          // The recipe
+    //     imgs: {},            // All the images used in the recipe 
+    //     formattingVars: [],  // All the variables in the recipe
+    //     unitSystem: "",      // Default unit system
+    // },
 
 let whitelist = [];
+let metricOrImperial = null;
 let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let numRecipesPerRow = 4;
-const secsToJumpscare = 2;
-const jumpscaresDone = [];
+const secsOfOverlay = 2;
+const overlaysDone = [];
+const unitConnections = {
+    "temp": {
+        "C": ["F"],
+        "F": ["C"],
+    },
+    "len": {
+        "mm": ["cm", "in"],
+        "cm": ["mm"],
+        "in": ["mm"],
+    },
+    "vol": {
+        "ml": ["L", "tsp", "tbsp", "foz", "cup", "qrt", "gal"],
+        "L": ["ml"],
+        "tsp": ["ml"],
+        "tbsp": ["ml"],
+        "foz": ["ml"],
+        "cup": ["ml"],
+        "qrt": ["ml"],
+        "gal": ["ml"],
+    },
+    "wgt": {
+        "g": ["kg", "lb", "oz"],
+        "kg": ["g"],
+        "oz": ["g"],
+        "lb": ["g"],
+    },
+};
 
 // What to run right after the site loads
 function BOOT() {
@@ -269,6 +308,44 @@ function BOOT() {
     window.addEventListener('resize', () => {
         renderRecipeButtons(whitelist);
     });
+
+    setUnitSystem();
+}
+
+// Check default unit system
+function usesMetricSystem() {
+  const userLocales = navigator.languages || [navigator.language];
+  
+  for (const locale of userLocales) {
+    // Extract the country code (last part, after the hyphen, case-insensitive)
+    const countryCode = locale.trim().split('-').pop().toLowerCase();
+    
+    // Check for known imperial countries
+    if (countryCode === 'us' || countryCode === 'mm' || countryCode === 'lr') {
+      return false; // Imperial
+    }
+  }
+
+  // Default to metric for all other locales (most of the world)
+  return true; // Metric
+}
+
+function setUnitSystem() {
+    if (usesMetricSystem()) {
+        metricOrImperial = "metric";
+    } else {
+        metricOrImperial = "imperial";
+    }
+
+    setUnitButtonText();
+}
+
+function setUnitButtonText() {
+    if (metricOrImperial == "metric") {
+        document.getElementById("unitToggle").textContent = "Change to imperial";
+    } else {
+        document.getElementById("unitToggle").textContent = "Change to metric";
+    }
 }
 
 // Shuffling the recipes
@@ -449,11 +526,13 @@ function selectRecipe(buttonElement) {
     const recipeShowing = document.getElementById("recipeShowing");
     const shuffle = document.getElementById("shuffleButton");
     const goBack = document.getElementById("backButton");
+    const units = document.getElementById("unitToggle");
 
     recipeSelection.classList.add("hidden");
     shuffle.classList.add("hidden");
     recipeShowing.classList.remove("hidden");
     goBack.classList.remove("hidden");
+    units.classList.remove("hidden");
 }
 
 function goBack() {
@@ -461,11 +540,13 @@ function goBack() {
     const recipeShowing = document.getElementById("recipeShowing");
     const shuffle = document.getElementById("shuffleButton");
     const goBack = document.getElementById("backButton");
+    const units = document.getElementById("unitToggle");
 
     recipeSelection.classList.remove("hidden");
     shuffle.classList.remove("hidden");
     recipeShowing.classList.add("hidden");
     goBack.classList.add("hidden");
+    units.classList.add("hidden");
 }
 
 // Search text input handling
@@ -475,37 +556,44 @@ function handleSubmit(event) {
     const searchQuery = document.getElementById("searchRecipe").value;
 
     if (searchQuery == "BOE JIDEN") {
-        if (boeJidenJumpscare(searchQuery)) {
+        if (overlays.bjOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "KIRBY") {
-        if (kirbyJumpscare(searchQuery)) {
+        if (overlays.kOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "ROZIZZLE THE RIZZLER") {
-        if (rozyJumpscare(searchQuery)) {
+        if (overlays.rOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "BAYAK") {
-        if (bayakJumpscare(searchQuery)) {
+        if (overlays.bOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "JC JENSON") {
-        if (jensonJumpscare(searchQuery)) {
+        if (overlays.jOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "FREAK BOB") {
-        if (danielJumpscare(searchQuery)) {
+        if (overlays.daOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else if (searchQuery == "DUOLINGO?!") {
-        if (duoJumpscare(searchQuery)) {
+        if (overlays.duOverlay(searchQuery)) {
             document.getElementById("searchRecipe").value = "";
+            whitelist = [];
         }
     } else {
         whitelist = search(searchQuery);
-        renderRecipeButtons(whitelist);
     }
+    renderRecipeButtons(whitelist);
 }
 
 // Searching recipes (One of two search algorithms can be selected)
@@ -624,84 +712,412 @@ function addDarkMode() {
     bodyElement.classList.add("darkMode");
 }
 
-// Temperature unit conversion
-function cToF(celsius=0) {
-    return Math.round((celsius * 9 / 5 + 32)*10)/10;
+// Unit conversions:
+function unitToggle() {
+    if (metricOrImperial == "metric") {
+        metricOrImperial = "imperial";
+    } else if (metricOrImperial == "imperial") {
+        metricOrImperial = "metric";
+    } else {
+        setUnitSystem();
+    }
+
+    setUnitButtonText();
 }
 
-function fToC(fahrenheit=0) {
-    return Math.round((fahrenheit - 32) * 50 / 9)/10;
+function unitConversion(unitType, startingUnit, endingUnit, startingValue=0, placesToRound=-1) {
+    // unitType = "temp", "len", "vol", "wgt"
+    // startingUnit, endingUnit = "C", "F", "mm", "cm", "in", "ml", "L", "tsp", "tbsp", "foz", "cup", "qrt", "gal", "g", "kg", "oz", "lb"
+    const steps = findConversionPath(unitType, startingUnit, endingUnit);
+    let currValue = startingValue;
+    let fromUnit = startingUnit;
+    let toUnit = null;
+
+    for (const step of steps) {
+        toUnit = step;
+        currValue = directUnitConversion(unitType, fromUnit, toUnit, currValue);
+        fromUnit = toUnit;
+    }
+
+    return roundToNPlaces(currValue, placesToRound);
 }
 
-// Easter egg stuff
-function hideJumpscares(imgID, textID){
-    document.getElementById("getJumpscared").classList.add("hidden");
-    document.getElementById(imgID).classList.add("hidden");
-    document.getElementById(textID).classList.add("hidden");
+function directUnitConversion(unitType, startingUnit, endingUnit, startingValue=0) {
+    if (unitType == "temp") {
+        if (startingUnit == "C" && endingUnit == "F") {
+            return unitConversions.cToF(startingValue);
+        }
+        if (startingUnit == "F" && endingUnit == "C") {
+            return unitConversions.fToC(startingValue);
+        }
+    } else if (unitType == "len") {
+        if (startingUnit == "mm" && endingUnit == "cm") {
+            return unitConversions.mmToCm(startingValue);
+        }
+        if (startingUnit == "cm" && endingUnit == "mm") {
+            return unitConversions.cmToMm(startingValue);
+        }
+        if (startingUnit == "mm" && endingUnit == "in") {
+            return unitConversions.mmToIn(startingValue);
+        }
+        if (startingUnit == "in" && endingUnit == "mm") {
+            return unitConversions.inToMm(startingValue);
+        }
+    } else if (unitType == "vol") {
+        if (startingUnit == "ml" && endingUnit == "L") {
+            return unitConversions.mlToL(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "tsp") {
+            return unitConversions.mlToTeaspoon(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "tbsp") {
+            return unitConversions.mlToTablespoon(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "foz") {
+            return unitConversions.mlToFoz(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "cup") {
+            return unitConversions.mlToCup(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "qrt") {
+            return unitConversions.mlToQuart(startingValue);
+        }
+        if (startingUnit == "ml" && endingUnit == "gal") {
+            return unitConversions.mlToGallon(startingValue);
+        }
+        if (startingUnit == "L" && endingUnit == "ml") {
+            return unitConversions.LToMl(startingValue);
+        }
+        if (startingUnit == "tsp" && endingUnit == "ml") {
+            return unitConversions.teaspoonToMl(startingValue);
+        }
+        if (startingUnit == "tbsp" && endingUnit == "ml") {
+            return unitConversions.tablespoonToMl(startingValue);
+        }
+        if (startingUnit == "foz" && endingUnit == "ml") {
+            return unitConversions.fozToMl(startingValue);
+        }
+        if (startingUnit == "cup" && endingUnit == "ml") {
+            return unitConversions.cupToMl(startingValue);
+        }
+        if (startingUnit == "qrt" && endingUnit == "ml") {
+            return unitConversions.quartToMl(startingValue);
+        }
+        if (startingUnit == "gal" && endingUnit == "ml") {
+            return unitConversions.gallonToMl(startingValue);
+        }
+    } else if (unitType == "wgt") {
+        if (startingUnit == "g" && endingUnit == "kg") {
+            return unitConversions.gToKg(startingValue);
+        }
+        if (startingUnit == "g" && endingUnit == "oz") {
+            return unitConversions.gToOz(startingValue);
+        }
+        if (startingUnit == "g" && endingUnit == "lb") {
+            return unitConversions.gToLb(startingValue);
+        }
+        if (startingUnit == "kg" && endingUnit == "g") {
+            return unitConversions.kgToG(startingValue);
+        }
+        if (startingUnit == "oz" && endingUnit == "g") {
+            return unitConversions.ozToG(startingValue);
+        }
+        if (startingUnit == "lb" && endingUnit == "g") {
+            return unitConversions.lbToG(startingValue);
+        }
+    }
+    return 0;
 }
 
-function showJumpscares(imgID, textID){
-    document.getElementById("getJumpscared").classList.remove("hidden");
-    document.getElementById(imgID).classList.remove("hidden");
-    document.getElementById(textID).classList.remove("hidden");
+function findConversionPath(unitType, startingUnit, endingUnit) {
+    const queue = [];
+    const seen = [];
+    queue.push(new unitTree(null, startingUnit));
+
+    while (queue.length != 0) {
+        let currentItem = queue.shift();
+
+        seen.push(currentItem.unit);
+
+        if (currentItem.unit == endingUnit) {
+            const steps = [];
+
+            while (currentItem.parent != null) {
+                steps.push(currentItem.unit);
+                currentItem = currentItem.parent;
+            }
+            steps.reverse();
+
+            return steps;
+        }
+
+        for (const unit of unitConnections[unitType][currentItem.unit]) {
+            if (!seen.includes(unit)) {
+                queue.push(new unitTree(currentItem, unit));
+            }
+        }
+    }
+
+    return [];
 }
 
-function jumpscareLogic(imgID, textID, time = 2) {
-    showJumpscares(imgID, textID);
-    setTimeout(function() {
-        hideJumpscares(imgID, textID);
-    }, 1000*time);
+// Decimal to fraction approximation
+function decimalToFraction(decimal=0) {
+    const decimalPart = decimal%1;
+    const commonFractionDenominators = [2, 3, 4, 8];
+    const commonFractions = [];
+    let smallestDiff = 1;
+    let endFraction = null;
+
+    for (const denom of commonFractionDenominators) {
+        for (let numer = 1; numer < denom; numer++) {
+            const newFraction = new fraction(numer, denom);
+            if (!fractionIncludes(commonFractions, newFraction)) { commonFractions.push(newFraction); }
+        }
+    }
+
+    for (const commonFraction of commonFractions) {
+        const newDiff = Math.abs(commonFraction.value - decimalPart);
+        if (newDiff < smallestDiff) {
+            smallestDiff = newDiff;
+            endFraction = commonFraction;
+        }
+    }
+
+    return endFraction;
 }
 
-function boeJidenJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("BOE-JIDEN", "jumpscareIdBoeJiden", secsToJumpscare);
-    return true;
+function gcd(a, b) {
+    if (!b) { return a; }
+
+    return gcd(b, a % b);
 }
 
-function kirbyJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("KIRBY", "jumpscareIdKirby", secsToJumpscare);
-    return true;
+function fractionIncludes(fractionArray, fractionIn) {
+    for (const fraction of fractionArray) {
+        if (fraction.equals(fractionIn)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
-function bayakJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("BAYAK", "jumpscareIdBayak", secsToJumpscare);
-    return true;
+function roundToNPlaces(value, n) {
+    if (n < 0) {
+        return value;
+    }
+    return Math.round(value * 10**n) / 10**n;
 }
 
-function rozyJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("ROZY", "jumpscareIdRozy", secsToJumpscare);
-    return true;
+// Classes
+class unitTree {
+    constructor(parent, unit) {
+        this.parent = parent;
+        this.unit = unit;
+    }
 }
 
-function jensonJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("JENSON", "jumpscareIdJenson", secsToJumpscare);
-    return true;
+class fraction {
+    constructor(numerator, denominator) {
+        this.numerator = numerator/gcd(numerator, denominator);
+        this.denominator = denominator/gcd(numerator, denominator);
+        this.value = numerator/denominator;
+    }
+
+    equals(otherFraction) {
+        return this.numerator * otherFraction.denominator == this.denominator * otherFraction.numerator;
+    }
+
+    toDecimal(roundingN=-1) {
+        return roundToNPlaces(this.value, roundingN);
+    }
+
+    multiply(factor) {
+        const newGcd = gcd(this.numerator * factor, this.denominator);
+        this.numerator = Math.trunc(this.numerator * factor / newGcd);
+        this.denominator = Math.trunc(this.denominator / newGcd);
+        this.value = this.numerator / this.denominator;
+    }
 }
 
-function danielJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("DANIEL", "jumpscareIdDaniel", secsToJumpscare);
-    return true;
+class unitConversions {
+    // Temperature unit conversion
+    static cToF(celsius=0) {
+        return celsius * 9 / 5 + 32;
+    }
+
+    static fToC(fahrenheit=0) {
+        return (fahrenheit - 32) * 5 / 9;
+    }
+
+    // Length unit conversion (mm, cm) vs (in)
+    static mmToCm(mm=0) {
+        return mm/10;
+    }
+
+    static cmToMm(cm=0) {
+        return cm*10;
+    }
+
+    static mmToIn(mm=0) {
+        return mm*5/127;
+    }
+
+    static inToMm(inch=0) {
+        return inch*2540;
+    }
+
+    // Volume unit conversion (ml, L) vs (teaspoon, tablespoon, foz, cup, quart, gallon)
+    static mlToL(ml=0) {
+        return ml/1000;
+    }
+
+    static mlToTeaspoon(ml=0) {
+        return ml*1000/4929;
+    }
+
+    static mlToTablespoon(ml=0) {
+        return ml*1000/14787;
+    }
+
+    static mlToFoz(ml=0) {
+        return ml*500/14787;
+    }
+
+    static mlToCup(ml=0) {
+        return ml*5/1183;
+    }
+
+    static mlToQuart(ml=0) {
+        return ml*5/4732;
+    }
+
+    static mlToGallon(ml=0) {
+        return ml/3785;
+    }
+
+    static LToMl(L=0) {
+        return L*1000;
+    }
+
+    static teaspoonToMl(teaspoon=0) {
+        return teaspoon*4.929;
+    }
+
+    static tablespoonToMl(tablespoon=0) {
+        return tablespoon*14.787;
+    }
+
+    static fozToMl(oz=0) {
+        return oz*14787/500;
+    }
+
+    static cupToMl(cup=0) {
+        return cup*1183/5;
+    }
+
+    static quartToMl(quart=0) {
+        return quart*4732/5;
+    }
+
+    static gallonToMl(gallon=0) {
+        return gallon*18927/5;
+    }
+
+    // Weight unit conversion (g, kg) vs (oz, lb)
+    static gToKg(g=0) {
+        return g/1000;
+    }
+
+    static gToOz(g=0) {
+        return g*20/567;
+    }
+
+    static gToLb(g=0) {
+        return g*5/2268;
+    }
+
+    static kgToG(kg=0) {
+        return kg*1000;
+    }
+
+    static ozToG(oz=0) {
+        return oz*28.35;
+    }
+
+    static lbToG(lb=0) {
+        return lb*453.6;
+    }
 }
 
-function duoJumpscare(searchQuery="") {
-    if (jumpscaresDone.includes(searchQuery)) { return false; }
-    jumpscaresDone.push(searchQuery);
-    jumpscareLogic("DUO", "jumpscareIdDuo", secsToJumpscare);
-    return true;
-}
+class overlays {
+    static hideOverlays(imgID, textID){
+        document.getElementById("getJumpscared").classList.add("hidden");
+        document.getElementById(imgID).classList.add("hidden");
+        document.getElementById(textID).classList.add("hidden");
+    }
 
+    static showOverlays(imgID, textID){
+        document.getElementById("getJumpscared").classList.remove("hidden");
+        document.getElementById(imgID).classList.remove("hidden");
+        document.getElementById(textID).classList.remove("hidden");
+    }
+
+    static overlayLogic(imgID, textID, time = 2) {
+        this.showOverlays(imgID, textID);
+        setTimeout(this.hideOverlays, 1000*time, imgID, textID);
+    }
+
+    static bjOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("BOE-JIDEN", "jumpscareIdBoeJiden", secsOfOverlay);
+        return true;
+    }
+
+    static kOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("KIRBY", "jumpscareIdKirby", secsOfOverlay);
+        return true;
+    }
+
+    static bOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("BAYAK", "jumpscareIdBayak", secsOfOverlay);
+        return true;
+    }
+
+    static rOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("ROZY", "jumpscareIdRozy", secsOfOverlay);
+        return true;
+    }
+
+    static jOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("JENSON", "jumpscareIdJenson", secsOfOverlay);
+        return true;
+    }
+
+    static daOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("DANIEL", "jumpscareIdDaniel", secsOfOverlay);
+        return true;
+    }
+
+    static duOverlay(searchQuery="") {
+        if (overlaysDone.includes(searchQuery)) { return false; }
+        overlaysDone.push(searchQuery);
+        this.overlayLogic("DUO", "jumpscareIdDuo", secsOfOverlay);
+        return true;
+    }
+}
 
 // Recipe button organization:
 // recipe divs: id="{authorName}{recipeName}Div", class="recipeButtonDiv"

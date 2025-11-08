@@ -59,27 +59,37 @@
 #BOE-JIDEN {
   position: absolute;
   width: 100%;
+  transform: translateY(-3%);
 }
 
 #KIRBY {
   position: absolute;
   width: 90%;
+  transform: translateY(-4%);
 }
 
 #ROZY {
   position: absolute;
   width: 70%;
+  transform: translateY(-12%);
 }
 
 #BAYAK {
   position: absolute;
   width: 80%;
+  transform: translateY(-3%);
 }
 
 #JENSON {
   position: absolute;
   width: 75%;
   transform: translateY(-15%) translateX(5%);
+}
+
+#DANIEL {
+  position: absolute;
+  width: 65%;
+  transform: translateY(-15%);
 }
 
 #DUO {
@@ -90,12 +100,6 @@
 
 #jumpscareIdDuo {
   color: #000;
-}
-
-#DANIEL {
-  position: absolute;
-  width: 65%;
-  transform: translateY(-10%);
 }
 
 input[type="text"] {
