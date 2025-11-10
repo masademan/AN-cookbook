@@ -49,50 +49,54 @@
   font-size: 2vw;
 }
 
-#jumpscareText {
+#overlayText {
   position: absolute;
   top: 85%;
   transform: translateY(-50%);
   font-size: 2vw;
 }
 
-#BOE-JIDEN {
+#BJ {
   position: absolute;
   width: 100%;
   transform: translateY(-3%);
 }
 
-#KIRBY {
+#K {
   position: absolute;
   width: 90%;
   transform: translateY(-4%);
 }
 
-#ROZY {
+#R {
   position: absolute;
   width: 70%;
   transform: translateY(-12%);
 }
 
-#BAYAK {
+#B {
   position: absolute;
   width: 80%;
   transform: translateY(-3%);
 }
 
-#JENSON {
-  position: absolute;
-  width: 75%;
-  transform: translateY(-15%) translateX(5%);
-}
-
-#DANIEL {
+#D {
   position: absolute;
   width: 65%;
   transform: translateY(-15%);
 }
 
-#DUO {
+#J {
+  position: absolute;
+  width: 75%;
+  transform: translateY(-15%) translateX(5%);
+}
+
+#jumpscareIdJenson {
+  color: #000;
+}
+
+#DU {
   position: absolute;
   width: 65%;
   transform: translateY(-15%);

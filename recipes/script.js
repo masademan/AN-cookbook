@@ -252,7 +252,7 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
     //     coverImg: "",        // The cover image of the recipe
     //     recipe: ``,          // The recipe
     //     imgs: {},            // All the images used in the recipe 
-    //     formattingVars: [],  // All the variables in the recipe
+    //     formattingVars: {},  // All the variables in the recipe
     //     unitSystem: "",      // Default unit system
     // },
 
@@ -260,6 +260,9 @@ let whitelist = [];
 let metricOrImperial = null;
 let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let numRecipesPerRow = 4;
+const assetRoot = "assets/recipeImgs/";
+const overlayAudioBJ = document.getElementById("OVERLAY-AUDIO-BJ");
+const overlayAudioVolume = 100;
 const secsOfOverlay = 2;
 const overlaysDone = [];
 const unitConnections = {
@@ -310,6 +313,8 @@ function BOOT() {
     });
 
     setUnitSystem();
+
+    overlayAudioBJ.valume = overlayAudioVolume/100;
 }
 
 // Check default unit system
@@ -457,8 +462,8 @@ function addRecipeButton(recipe, rowNum, imgWidth) {
     // Create the img & text
     const recipeImg = document.createElement("img");
     let imgPath = recipe.coverImg.toLowerCase();
-    if (!imgPath.includes("assets/")) {
-        imgPath = "assets/" + imgPath;
+    if (!imgPath.includes(assetRoot)) {
+        imgPath = assetRoot + imgPath;
     }
     recipeImg.setAttribute("src", imgPath);
     recipeImg.setAttribute("alt", recipe.recipeName + " cover image");
@@ -858,7 +863,8 @@ function findConversionPath(unitType, startingUnit, endingUnit) {
         }
     }
 
-    return [];
+    throw new TypeError(`Could not find a way to convert ${startingUnit} to ${endingUnit} under the ${unitType} unit type.`);
+    
 }
 
 // Decimal to fraction approximation
@@ -1053,13 +1059,13 @@ class unitConversions {
 
 class overlays {
     static hideOverlays(imgID, textID){
-        document.getElementById("getJumpscared").classList.add("hidden");
+        document.getElementById("overlays").classList.add("hidden");
         document.getElementById(imgID).classList.add("hidden");
         document.getElementById(textID).classList.add("hidden");
     }
 
     static showOverlays(imgID, textID){
-        document.getElementById("getJumpscared").classList.remove("hidden");
+        document.getElementById("overlays").classList.remove("hidden");
         document.getElementById(imgID).classList.remove("hidden");
         document.getElementById(textID).classList.remove("hidden");
     }
@@ -1069,52 +1075,59 @@ class overlays {
         setTimeout(this.hideOverlays, 1000*time, imgID, textID);
     }
 
+    static playSound(audio) {
+        const sound = audio.cloneNode();
+        sound.volume = audio.volume;
+        sound.play();
+    }
+
     static bjOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("BOE-JIDEN", "jumpscareIdBoeJiden", secsOfOverlay);
+        this.overlayLogic("BJ", "overlayIdBJ", Math.max(overlayAudioBJ.duration, secsOfOverlay));
+        this.playSound(overlayAudioBJ);
         return true;
     }
 
     static kOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("KIRBY", "jumpscareIdKirby", secsOfOverlay);
+        this.overlayLogic("K", "overlayIdK", secsOfOverlay);
         return true;
     }
 
     static bOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("BAYAK", "jumpscareIdBayak", secsOfOverlay);
+        this.overlayLogic("B", "overlayIdB", secsOfOverlay);
         return true;
     }
 
     static rOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("ROZY", "jumpscareIdRozy", secsOfOverlay);
+        this.overlayLogic("R", "overlayIdR", secsOfOverlay);
         return true;
     }
 
     static jOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("JENSON", "jumpscareIdJenson", secsOfOverlay);
+        this.overlayLogic("J", "overlayIdJ", secsOfOverlay);
         return true;
     }
 
     static daOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("DANIEL", "jumpscareIdDaniel", secsOfOverlay);
+        this.overlayLogic("D", "overlayIdD", secsOfOverlay);
         return true;
     }
 
     static duOverlay(searchQuery="") {
         if (overlaysDone.includes(searchQuery)) { return false; }
         overlaysDone.push(searchQuery);
-        this.overlayLogic("DUO", "jumpscareIdDuo", secsOfOverlay);
+        this.overlayLogic("DU", "overlayIdDU", secsOfOverlay);
         return true;
     }
 }
