@@ -258,7 +258,7 @@ Morbi cursus cursus lectus, ac mattis risus convallis quis. Vivamus lacinia ultr
 
 let whitelist = [];
 let metricOrImperial = null;
-let darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let darkMode = false;
 let numRecipesPerRow = 4;
 const secsOfOverlay = 2;
 const overlaysDone = [];
@@ -300,10 +300,6 @@ function BOOT() {
         handleSubmit(event);
     });
 
-    // See if darkMode is true
-    if (darkMode) {
-        addDarkMode();
-    }
 
     window.addEventListener('resize', () => {
         renderRecipeButtons(whitelist);
@@ -372,7 +368,20 @@ function randInt(min, max) {
 // Rendering the recipe data
 function renderRecipe(recipe) {
     const title = document.getElementById("recipeTitle");
-    title.textContent = recipe.recipeName;
+    const author = document.getElementById("recipeAuthor");
+    const desc = document.getElementById("recipeDesc");
+    const coverImg = document.getElementById("recipeCoverImg");
+
+    title.textContent = recipe.recipeName || "Untitled recipe";
+    author.textContent = recipe.author || "";
+    desc.textContent = recipe.recipeDesc || "";
+
+    let imgPath = (recipe.coverImg || "test/test.jpeg").toLowerCase();
+    if (!imgPath.includes("assets/")) {
+        imgPath = "assets/" + imgPath;
+    }
+    coverImg.src = imgPath;
+    coverImg.alt = (recipe.recipeName || "Recipe") + " cover image";
 }
 
 function renderRecipeImages(recipe, imgSrc) {
@@ -386,20 +395,14 @@ function renderRecipeButtons(whitelist = []) {
     }
 
     const seen = [];
-    let rowNum = 0;
-    let recipeCount = 0;
-    const imgWidth = getFinalImgWidth();
+    // Clear previous list
+    const container = document.getElementById("recipeSelection");
+    container.innerHTML = "";
+
     for (let recipe of recipes) {
-        removeElementByID(recipe.author + recipe.recipeName + "Div");
-        if (contains(renderList, recipe)) {
-            if (!contains(seen, recipe)) {
-                addRecipeButton(recipe, rowNum, imgWidth);
-                recipeCount++;
-                if (recipeCount % numRecipesPerRow == 0) {
-                    rowNum++;
-                }
-                seen.push(recipe);
-            }
+        if (contains(renderList, recipe) && !contains(seen, recipe)) {
+            addRecipeButton(recipe);
+            seen.push(recipe);
         }
     }
 }
@@ -424,58 +427,49 @@ function getImgWidth(numPerRow) {
 }
 
 function addRecipeButton(recipe, rowNum, imgWidth) {
-    // Get the parent div and shuffle button
     const recipeDiv = document.getElementById("recipeSelection");
-    // const shuffleButton = document.getElementById("shuffleButton");
-    let parentDiv = document.getElementById("row"+rowNum.toString());
 
-    // Create the div to hold the button
-    const childDiv = document.createElement("div");
-    childDiv.setAttribute("id", recipe.author + recipe.recipeName + "Div");
-    childDiv.setAttribute("class", "recipeButtonDiv");
+    // Card wrapper
+    const card = document.createElement("button");
+    card.setAttribute("id", recipe.author + recipe.recipeName + "Button");
+    card.setAttribute("onclick", "selectRecipe(this)");
+    card.className = "recipe-card flex flex-col items-start text-left w-[160px] sm:w-[180px] bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-slate-100 overflow-hidden";
 
-    // Add the recipe div to the document
-    if (!parentDiv) {
-        parentDiv = document.createElement("div");
-        parentDiv.setAttribute("id", "row"+rowNum.toString());
-        parentDiv.setAttribute("class", "recipeRow");
-
-        // recipeDiv.insertBefore(parentDiv, shuffleButton);
-        recipeDiv.appendChild(parentDiv);
-    }
-    parentDiv.appendChild(childDiv);
-
-    // Create the button
-    const childButton = document.createElement("button");
-    childButton.setAttribute("id", recipe.author + recipe.recipeName + "Button");
-    childButton.setAttribute("class", "recipeButton");
-    childButton.setAttribute("onclick", "selectRecipe(this)");
-
-    // Add the recipe button to the div
-    childDiv.appendChild(childButton);
-
-    // Create the img & text
-    const recipeImg = document.createElement("img");
+    // Image
+    const img = document.createElement("img");
     let imgPath = recipe.coverImg.toLowerCase();
     if (!imgPath.includes("assets/")) {
         imgPath = "assets/" + imgPath;
     }
-    recipeImg.setAttribute("src", imgPath);
-    recipeImg.setAttribute("alt", recipe.recipeName + " cover image");
-    recipeImg.setAttribute("width", imgWidth);
+    img.src = imgPath;
+    img.alt = recipe.recipeName + " cover image";
+    img.className = "w-full h-28 object-cover";
+    card.appendChild(img);
 
-    const recipeName = document.createElement("p");
-    recipeName.setAttribute("class", "recipeName");
-    recipeName.textContent = recipe.recipeName;
+    // Text container
+    const textWrap = document.createElement("div");
+    textWrap.className = "px-3 py-2 w-full";
 
-    const recipeAuthor = document.createElement("p");
-    recipeAuthor.setAttribute("class", "recipeAuthor");
-    recipeAuthor.textContent = recipe.author;
+    const nameEl = document.createElement("p");
+    nameEl.className = "font-semibold text-sm text-slate-900 truncate";
+    nameEl.textContent = recipe.recipeName;
+    textWrap.appendChild(nameEl);
 
-    // Add the recipe elements to the recipe div    
-    childButton.appendChild(recipeImg);
-    childButton.appendChild(recipeName);
-    childButton.appendChild(recipeAuthor);
+    const authorEl = document.createElement("p");
+    authorEl.className = "text-[11px] text-slate-500 truncate";
+    authorEl.textContent = recipe.author;
+    textWrap.appendChild(authorEl);
+
+    if (recipe.recipeDesc) {
+        const descEl = document.createElement("p");
+        descEl.className = "mt-1 text-[10px] text-slate-500 line-clamp-2";
+        descEl.textContent = recipe.recipeDesc;
+        textWrap.appendChild(descEl);
+    }
+
+    card.appendChild(textWrap);
+
+    recipeDiv.appendChild(card);
 }
 
 function removeElementByID(id) {
@@ -685,32 +679,6 @@ function compareObjects(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
 }
 
-// Dark mode toggle
-function toggleDarkMode() {
-    darkMode = !darkMode;
-
-    if (darkMode) {
-        addDarkMode();
-    } else {
-        removeDarkMode();
-    }
-}
-
-function removeDarkMode() {
-    const darkModeButton = document.getElementById("darkModeToggle");
-    const bodyElement = document.body;
-
-    darkModeButton.textContent = "Dark Mode";
-    bodyElement.classList.remove("darkMode");
-}
-
-function addDarkMode() {
-    const darkModeButton = document.getElementById("darkModeToggle");
-    const bodyElement = document.body;
-
-    darkModeButton.textContent = "Light Mode";
-    bodyElement.classList.add("darkMode");
-}
 
 // Unit conversions:
 function unitToggle() {
