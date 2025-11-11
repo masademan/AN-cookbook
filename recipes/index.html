@@ -43,33 +43,33 @@
         ></button>
     </div>
 
-     <div id="getJumpscared" class="overlay hidden bg-black/90">
-        <img id="BOE-JIDEN" src="assets/not jumpscares/boe-jiden.png" class="hidden">
-        <img id="KIRBY" src="assets/not jumpscares/kirby.jpg" class="hidden">
-        <img id="ROZY" src="assets/not jumpscares/rozy.png" class="hidden">
-        <img id="BAYAK" src="assets/not jumpscares/bayak.png" class="hidden">
-        <img id="JENSON" src="assets/not jumpscares/jenson.png" class="hidden">
-        <img id="DANIEL" src="assets/not jumpscares/daniel.png" class="hidden">
-        <img id="DUO" src="assets/not jumpscares/duo.jpeg" class="hidden">
-        <div id="jumpscareText">
-            <h1 id="jumpscareIdBoeJiden" class="hidden">BOE JIDEN</h1>
-            <h1 id="jumpscareIdKirby" class="hidden">KIRBY</h1>
-            <h1 id="jumpscareIdRozy" class="hidden">ROZIZZLE THE RIZZLER</h1>
-            <h1 id="jumpscareIdBayak" class="hidden">BAYAK</h1>
-            <h1 id="jumpscareIdJenson" class="hidden">JENSON THE DIDDLER</h1>
-            <h1 id="jumpscareIdDaniel" class="hidden">THE FREAKBOB HIMSELF</h1>
-            <h1 id="jumpscareIdDuo" class="hidden">SPANISH OR VANISH</h1>
+    <div id="overlays" class="overlay hidden">
+        <img id="BJ" src="assets/overlays/BJ.png" class="hidden">
+        <img id="K" src="assets/overlays/K.jpg" class="hidden">
+        <img id="R" src="assets/overlays/R.png" class="hidden">
+        <img id="B" src="assets/overlays/B.png" class="hidden">
+        <img id="J" src="assets/overlays/J.png" class="hidden">
+        <img id="D" src="assets/overlays/D.png" class="hidden">
+        <img id="DU" src="assets/overlays/DU.jpeg" class="hidden">
+        <div id="overlayText">
+            <h1 id="overlayIdBJ" class="hidden">BOE JIDEN</h1>
+            <h1 id="overlayIdK" class="hidden">KIRBY</h1>
+            <h1 id="overlayIdR" class="hidden">ROZIZZLE THE RIZZLER</h1>
+            <h1 id="overlayIdB" class="hidden">BAYAK</h1>
+            <h1 id="overlayIdJ" class="hidden">JENSON THE DIDDLER</h1>
+            <h1 id="overlayIdD" class="hidden">THE FREAKBOB HIMSELF</h1>
+            <h1 id="overlayIdDU" class="hidden">SPANISH OR VANISH</h1>
         </div>
     </div>
 
-     <div id="recipeSelection" class="max-w-5xl mx-auto mt-6 flex flex-wrap gap-4 justify-center">
-     </div>
+    <div id="recipeSelection">
+    </div>
 
-     <div id="recipeShowing" class="hidden max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-lg p-6 space-y-4 border border-slate-100">
-        <div id="mainRecipeInfo" class="flex flex-col md:flex-row items-start gap-4">
-            <div id="titleAndAuthor" class="flex-1 space-y-1">
-                 <h1 id="recipeTitle" class="text-2xl font-semibold text-slate-900"></h1>
-                 <p id="recipeAuthor" class="text-sm text-slate-600"></p>
+    <div id="recipeShowing" class="hidden">
+        <div id="mainRecipeInfo">
+            <div id="titleAndAuthor">
+                <h1 id="recipeTitle"></h1>
+                <p id="recipeAuthor"></p>
             </div>
              <div id="coverImg" class="w-full md:w-48 h-32 md:h-32 overflow-hidden rounded-md bg-slate-100 flex items-center justify-center">
                 <img id="recipeCoverImg" class="w-full h-full object-cover"/>
@@ -96,7 +96,9 @@
                 <p id="recipeInstructions"></p>
             </div>
         </div>
-     </div>
+    </div>
+
+    <audio id="OVERLAY-AUDIO-BJ" src="assets/sounds/bjOverlaySound.wav" preload="metadata"></audio>
 
     <script src="script.js"></script>
 </body>
