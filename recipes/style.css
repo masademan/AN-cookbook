@@ -1,63 +1,37 @@
-:root {
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --sticky-background: #ebebeb;
-  --button-background: #e5e5e5;
-  --border-color: #cacaca;
-}
-
-.darkMode {
-  --background-color: #1a1a1a;
-  --text-color: #f0f0f0;
-  --sticky-background: #222222;
-  --button-background: #202020;
-  --border-color: #545454;
-}
-
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
-.recipeRow {
-    display: flex;
-    justify-content: center; /* centers the recipes */
-    gap: 20px;
-    padding-top: 20px;
-}
-
-.staysTop {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    position: sticky;
-    top: 0; /* The element will stick when its top edge reaches the viewport's top edge */
-    background-color: var(--sticky-background); /* Example background */
-    padding: 1rem; /* Example padding */
-}
-
+/* Keep overlay + jumpscare positioning; visual styles now via Tailwind */
 .overlay {
   display: flex;
-  position: fixed; /* Sit on top of the page content */
+  position: fixed;
   justify-content: center;
   align-items: center;
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  width: 100%;
+  height: 100%;
   pointer-events: visible;
+  inset: 0;
+  z-index: 50;
 }
 
-#titleBar {
-  font-size: 2vw;
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 #overlayText {
   position: absolute;
   top: 85%;
   transform: translateY(-50%);
-  font-size: 2vw;
 }
 
 #BJ {
   position: absolute;
+}
+
+#BOE-JIDEN {
   width: 100%;
   transform: translateY(-3%);
 }
@@ -104,21 +78,4 @@
 
 #jumpscareIdDuo {
   color: #000;
-}
-
-input[type="text"] {
-    background-color: var(--button-background);
-    color: var(--text-color);
-    border-color: var(--border-color);
-}
-
-button {
-    background-color: var(--button-background);
-    color: var(--text-color);
-    border-color: var(--border-color);
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
 }
